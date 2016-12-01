@@ -1,0 +1,12 @@
+
+*.caffemodel
+
+*.solverstate
+
+.smb*
+
+log.txt
+
+caffe_code/caffe3d_suncg/git_backup
+
+results/*

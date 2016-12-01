@@ -1,0 +1,621 @@
+layer {
+  name: "data"
+  type: "SuncgData"
+  top: "data"
+  top: "seg_label"
+  top: "seg_weight"
+  suncg_data_param {
+    file_data: "../../../../data/depthbin/SUNCG01"
+    file_data: "../../../../data/depthbin/SUNCG02"
+    file_list: ""
+    vox_unit: 0.02
+    vox_margin: 0.24
+    vox_size: 240
+    vox_size: 144
+    vox_size: 240
+    crop_size: 240
+    crop_size: 144
+    crop_size: 240
+    label_size: 60
+    label_size: 36
+    label_size: 60
+    seg_classes: 11
+    shuffle: true
+    occ_empty_only: true
+    neg_obj_sample_ratio: 2
+    seg_class_map: 0
+    seg_class_map: 1
+    seg_class_map: 2
+    seg_class_map: 3
+    seg_class_map: 4
+    seg_class_map: 11
+    seg_class_map: 5
+    seg_class_map: 6
+    seg_class_map: 7
+    seg_class_map: 8
+    seg_class_map: 8
+    seg_class_map: 10
+    seg_class_map: 10
+    seg_class_map: 10
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_map: 9
+    seg_class_map: 8
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_map: 10
+    seg_class_map: 10
+    seg_class_map: 11
+    seg_class_map: 8
+    seg_class_map: 10
+    seg_class_map: 11
+    seg_class_map: 9
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_map: 11
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    seg_class_weight: 1
+    occ_class_weight: 10
+    occ_class_weight: 10
+    with_projection_tsdf: false
+    batch_size: 1
+    tsdf_type: 1
+    data_type: TSDF
+    surf_only: false
+  }
+}
+layer {
+  name: "conv1_1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1_1"
+  convolution_param {
+    num_output: 16
+    pad: 3
+    pad: 3
+    pad: 3
+    kernel_size: 7
+    kernel_size: 7
+    kernel_size: 7
+    stride: 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    engine: CUDNN
+    axis: 1
+  }
+}
+layer {
+  name: "relu1_1"
+  type: "ReLU"
+  bottom: "conv1_1"
+  top: "conv1_1"
+}
+layer {
+  name: "reduction2_1"
+  type: "Convolution"
+  bottom: "conv1_1"
+  top: "reduction2_1"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "conv2_1"
+  type: "Convolution"
+  bottom: "conv1_1"
+  top: "conv2_1"
+  convolution_param {
+    num_output: 32
+    pad: 1
+    pad: 1
+    pad: 1
+    kernel_size: 3
+    kernel_size: 3
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    engine: CUDNN
+    axis: 1
+  }
+}
+layer {
+  name: "relu2_1"
+  type: "ReLU"
+  bottom: "conv2_1"
+  top: "conv2_1"
+}
+layer {
+  name: "conv2_2"
+  type: "Convolution"
+  bottom: "conv2_1"
+  top: "conv2_2"
+  convolution_param {
+    num_output: 32
+    pad: 1
+    pad: 1
+    pad: 1
+    kernel_size: 3
+    kernel_size: 3
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    axis: 1
+  }
+}
+layer {
+  name: "res2_2"
+  type: "Eltwise"
+  bottom: "reduction2_1"
+  bottom: "conv2_2"
+  top: "res2_2"
+}
+layer {
+  name: "add2_2"
+  type: "ReLU"
+  bottom: "res2_2"
+  top: "res2_2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "res2_2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+    engine: CUDNN
+  }
+}
+layer {
+  name: "reduction3_1"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "reduction3_1"
+  convolution_param {
+    num_output: 64
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "conv3_1"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3_1"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    pad: 1
+    pad: 1
+    kernel_size: 3
+    kernel_size: 3
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    engine: CUDNN
+    axis: 1
+  }
+}
+layer {
+  name: "relu3_1"
+  type: "ReLU"
+  bottom: "conv3_1"
+  top: "conv3_1"
+}
+layer {
+  name: "conv3_2"
+  type: "Convolution"
+  bottom: "conv3_1"
+  top: "conv3_2"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    pad: 1
+    pad: 1
+    kernel_size: 3
+    kernel_size: 3
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    engine: CUDNN
+    axis: 1
+  }
+}
+layer {
+  name: "res3_2"
+  type: "Eltwise"
+  bottom: "reduction3_1"
+  bottom: "conv3_2"
+  top: "res3_2"
+}
+layer {
+  name: "add3_2"
+  type: "ReLU"
+  bottom: "res3_2"
+  top: "res3_2"
+}
+layer {
+  name: "relu3_2"
+  type: "ReLU"
+  bottom: "res3_2"
+  top: "res3_2"
+}
+layer {
+  name: "conv3_3"
+  type: "Convolution"
+  bottom: "res3_2"
+  top: "conv3_3"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    pad: 1
+    pad: 1
+    kernel_size: 3
+    kernel_size: 3
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    engine: CUDNN
+    axis: 1
+  }
+}
+layer {
+  name: "relu3_3"
+  type: "ReLU"
+  bottom: "conv3_3"
+  top: "conv3_3"
+}
+layer {
+  name: "conv3_4"
+  type: "Convolution"
+  bottom: "conv3_3"
+  top: "conv3_4"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    pad: 1
+    pad: 1
+    kernel_size: 3
+    kernel_size: 3
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    engine: CUDNN
+    axis: 1
+  }
+}
+layer {
+  name: "res3_4"
+  type: "Eltwise"
+  bottom: "res3_2"
+  bottom: "conv3_4"
+  top: "res3_4"
+}
+layer {
+  name: "add3_4"
+  type: "ReLU"
+  bottom: "res3_4"
+  top: "res3_4"
+}
+layer {
+  name: "relu3_4"
+  type: "ReLU"
+  bottom: "res3_4"
+  top: "res3_4"
+}
+layer {
+  name: "conv3_5"
+  type: "Convolution"
+  bottom: "res3_4"
+  top: "conv3_5"
+  convolution_param {
+    num_output: 64
+    pad: 2
+    pad: 2
+    pad: 2
+    kernel_size: 3
+    kernel_size: 3
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    engine: CAFFE
+    axis: 1
+    dilation: 2
+    dilation: 2
+    dilation: 2
+  }
+}
+layer {
+  name: "relu3_5"
+  type: "ReLU"
+  bottom: "conv3_5"
+  top: "conv3_5"
+}
+layer {
+  name: "conv3_6"
+  type: "Convolution"
+  bottom: "conv3_5"
+  top: "conv3_6"
+  convolution_param {
+    num_output: 64
+    pad: 2
+    pad: 2
+    pad: 2
+    kernel_size: 3
+    kernel_size: 3
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    engine: CAFFE
+    axis: 1
+    dilation: 2
+    dilation: 2
+    dilation: 2
+  }
+}
+layer {
+  name: "res3_6"
+  type: "Eltwise"
+  bottom: "res3_4"
+  bottom: "conv3_6"
+  top: "res3_6"
+}
+layer {
+  name: "add3_6"
+  type: "ReLU"
+  bottom: "res3_6"
+  top: "res3_6"
+}
+layer {
+  name: "relu3_6"
+  type: "ReLU"
+  bottom: "res3_6"
+  top: "res3_6"
+}
+layer {
+  name: "conv3_7"
+  type: "Convolution"
+  bottom: "res3_6"
+  top: "conv3_7"
+  convolution_param {
+    num_output: 64
+    pad: 2
+    pad: 2
+    pad: 2
+    kernel_size: 3
+    kernel_size: 3
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    engine: CAFFE
+    axis: 1
+    dilation: 2
+    dilation: 2
+    dilation: 2
+  }
+}
+layer {
+  name: "relu3_7"
+  type: "ReLU"
+  bottom: "conv3_7"
+  top: "conv3_7"
+}
+layer {
+  name: "conv3_8"
+  type: "Convolution"
+  bottom: "conv3_7"
+  top: "conv3_8"
+  convolution_param {
+    num_output: 64
+    pad: 2
+    pad: 2
+    pad: 2
+    kernel_size: 3
+    kernel_size: 3
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    engine: CAFFE
+    axis: 1
+    dilation: 2
+    dilation: 2
+    dilation: 2
+  }
+}
+layer {
+  name: "res3_8"
+  type: "Eltwise"
+  bottom: "res3_6"
+  bottom: "conv3_8"
+  top: "res3_8"
+}
+layer {
+  name: "add3_8"
+  type: "ReLU"
+  bottom: "res3_8"
+  top: "res3_8"
+}
+layer {
+  name: "Concat"
+  type: "Concat"
+  bottom: "res3_2"
+  bottom: "res3_4"
+  bottom: "res3_6"
+  bottom: "res3_8"
+  top: "sum"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "sum_relu"
+  type: "ReLU"
+  bottom: "sum"
+  top: "sum"
+}
+layer {
+  name: "conv4_1_new"
+  type: "Convolution"
+  bottom: "sum"
+  top: "conv4_1"
+  convolution_param {
+    num_output: 128
+    kernel_size: 1
+    kernel_size: 1
+    kernel_size: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.1
+    }
+    bias_filler {
+      type: "constant"
+    }
+    axis: 1
+  }
+}
+layer {
+  name: "relu4_1"
+  type: "ReLU"
+  bottom: "conv4_1"
+  top: "conv4_1"
+}
+layer {
+  name: "conv4_2"
+  type: "Convolution"
+  bottom: "conv4_1"
+  top: "conv4_2"
+  convolution_param {
+    num_output: 128
+    kernel_size: 1
+    kernel_size: 1
+    kernel_size: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "relu4_2"
+  type: "ReLU"
+  bottom: "conv4_2"
+  top: "conv4_2"
+}
+layer {
+  name: "fc12"
+  type: "Convolution"
+  bottom: "conv4_2"
+  top: "fc12"
+  convolution_param {
+    num_output: 12
+    kernel_size: 1
+    kernel_size: 1
+    kernel_size: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "fc12"
+  bottom: "seg_label"
+  bottom: "seg_weight"
+  top: "loss"
+  loss_param {
+    ignore_label: 255
+  }
+}
