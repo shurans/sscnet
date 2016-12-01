@@ -85,22 +85,11 @@ export PYTHONPATH=~/build_master_release/python:$PYTHONPATH
 cd sscnet_release/caffe_code/train/ftnyu
 ./train.sh
 0. Training from scratch 
-    1. Download the suncg training data
     ``` shell 
-    cd sscnet_release/data/
-    ./download_suncgdata.sh
-    ```
-
-
-
-
-    2.  Training 
-    ``` shell 
-    cd sscnet_release/caffe_code/train/trainsuncg
+     cd sscnet_release/caffe_code/train/trainsuncg
     ./train.sh
     ```
-
-
+    
 0. To get more training data from SUNCG, please reference the SUNCG toolbox 
     
 
@@ -113,7 +102,7 @@ cd sscnet_release/caffe_code/train/ftnyu
     ./download_result.sh
     ```
 0. Run the evaluation code 
-``` shell 
+    ``` shell 
     cd sscnet_release/matlab_code
     evluation_script('../results/','nyucad') 
     ```
@@ -126,14 +115,14 @@ cd sscnet_release/caffe_code/train/ftnyu
 
 ### Data 
 0. Date format 
-depth map : 
-16 bit png with bit shifting.
-Please reference: ./matlab_code/readDepth.m about the depth format.
-3d Volume: 
-First three float stores the origin of the 3D volume in world cordinate
-Followed by 16 float of camera pose.
-Followed the 3D volume encoded by Run-length encoding
-Please reference: ./matlab_code/utils/readRLEfile.m for more detail.
+    1. depth map : 
+        16 bit png with bit shifting.
+        Please reference: ./matlab_code/readDepth.m about the depth format.
+    2. 3d Volume: 
+        First three float stores the origin of the 3D volume in world cordinate
+        Followed by 16 float of camera pose.
+        Followed the 3D volume encoded by Run-length encoding
+        Please reference: ./matlab_code/utils/readRLEfile.m for more detail.
 
 
 0. Example code to convert NYU ground truth data: 
