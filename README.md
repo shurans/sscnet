@@ -85,20 +85,20 @@ export PYTHONPATH=~/build_master_release/python:$PYTHONPATH
 cd sscnet_release/caffe_code/train/ftnyu
 ./train.sh
 0. Training from scratch 
-Download the suncg training data
-``` shell 
-     cd sscnet_release/data/
-        ./download_suncgdata.sh
+    1. Download the suncg training data
+    ``` shell 
+    cd sscnet_release/data/
+    ./download_suncgdata.sh
     ```
 
 
 
 
-      2.  Training 
-``` shell 
-cd sscnet_release/caffe_code/train/trainsuncg
-./train.sh
-```
+    2.  Training 
+    ``` shell 
+    cd sscnet_release/caffe_code/train/trainsuncg
+    ./train.sh
+    ```
 
 
 0. To get more training data from SUNCG, please reference the SUNCG toolbox 
@@ -108,9 +108,9 @@ cd sscnet_release/caffe_code/train/trainsuncg
 ### Visualization and Evaluation:
 0. After testing the result should stored in sscnet_release/results
 0. You can also download the precomputed result:
-``` shell 
-cd sscnet_release/
-./download_result.sh
+    ``` shell 
+    cd sscnet_release/
+    ./download_result.sh
     ```
 0. Run the evaluation code 
 ``` shell 
