@@ -24,7 +24,7 @@ def test_model():
     ##########  testing on NYUCAD uncommoent the following three lines ############### 
     model_path = 'deploy_net_nyucad.txt'
     pretrained_path = root_path + '/models/suncg_ft_nyucad.caffemodel'
-    output_path = root_path + '/results/result_nyucad.hdf5';
+    output_file = root_path + '/results/result_nyucad.hdf5';
     numof_files = 654    
 
     # #############  testing on NYU  uncommoent the following three lines ############### 

@@ -1,0 +1,162 @@
+function vis_test_script(OutputPath,benchmark,downscale)
+%cd /n/fs/modelnet/SUNCG/code/voxelComplete/matlab
+%vis_test_script('/n/fs/suncg/fy/suncg/train/net_res_5_lr_1e-02_m_0.90_neg_1.0_it_4/','p5d',0)
+%vis_test_script('/n/fs/suncg/fy/suncg/train/net_5_lr_1e-02_m_0.90_neg_1.0_it_4','p5d',0)
+%vis_test_script('/n/fs/modelnet/SUNCG/caffe/scripts/net7_concat_nyucad/','nyucad',4)
+%vis_test_script('/n/fs/modelnet/SUNCG/caffe/scripts/di_completion/','nyucad',4)
+%vis_test_script('/n/fs/modelnet/SUNCG/caffe/scripts/net7_concat_ftnyucad/','nyucad',4)
+
+cd /n/fs/modelnet/SUNCG/code/voxelComplete/matlab
+dbstop if error;
+marvin =0;
+
+   hdf5Path = OutputPath;
+
+%downscale = 4;
+initPath();
+
+load('ClassMapping.mat');load('cls_color');load('voxletTest');
+iseleven_class = true;
+if iseleven_class
+    [~,mapIds] = ismember(map36to11,elevenClass);
+    mapIds = [0,mapIds];
+    cls_names = {'empty','ceiling','floor','wall','window','chair','bed','sofa','table','tvs','furn','objs'};
+    classtoEvaluate = [1:11];
+    cls_color_mat = cls_color([1:5,7:11,16,17],:);
+else
+    [~,mapIds] = ismember(map36to16,sixteenClass);
+    mapIds = [0,mapIds];
+    cls_names = {'empty','ceiling','floor','wall','window','door','chair','bed','sofa','table','bookshelf','cabinet','night_stand','bathtub','toilet','tv','obj'};
+    classtoEvaluate = [1:16];
+    cls_color_mat = cls_color;
+end
+
+dataRootfolder = '/n/fs/suncg/voxelLabelComplete/';
+if strcmp(benchmark,'p5d')
+   groundtruth_path = fullfile(dataRootfolder,'mat','SUNCGtest_49700_49884');
+   evalvol_path = groundtruth_path;
+   load(fullfile(fullfile(dataRootfolder,'data','SUNCGtest_49700_49884','camera_list_train.mat')));
+   for dataIdx = 1:length(dataList)
+       Filename{dataIdx} = sprintf('%08d_%s_fl%03d_rm%04d_0000',dataIdx-1,dataList(dataIdx).sceneId,dataList(dataIdx).floorId,dataList(dataIdx).roomId);
+   end
+   numoffiles = 470;
+   result_filename  ='result_p5d.hdf5';
+else
+   groundtruth_path = fullfile(dataRootfolder,'mat','NYUCADtest');
+   load('./bechmark/test_NYUv2images.mat')
+   for dataIdx = 1:length(testSeq)
+       Id = str2double(testSeq{dataIdx}(length('/n/fs/sun3d/data/NYUv2images/NYU')+1:end-1));
+       Filename{dataIdx} = sprintf('NYU%04d_0000',Id);
+   end
+   if strcmp(benchmark,'nyucad')
+       evalvol_path = fullfile(dataRootfolder,'mat','NYUCADtest');
+       result_filename  ='result_nyucad.hdf5';
+    elseif strcmp(benchmark,'nyu')
+        evalvol_path = fullfile(dataRootfolder,'mat','NYUtest');
+        result_filename  ='result_nyu.hdf5';
+    else
+        fprintf('unkown benchmark ... \n')
+    end
+end
+
+fprintf('loading files %s \n', fullfile(hdf5Path,result_filename))
+predobjTensor = hdf5read(fullfile(hdf5Path,result_filename),'/result');
+numoffiles = size(predobjTensor,5);
+
+
+%% evaluation
+fprintf('evaluation ... \n')
+mkdir(fullfile(OutputPath,benchmark));
+for batchId = 1:numoffiles
+    if downscale ==4
+        ld = load(fullfile(groundtruth_path,[Filename{batchId} '_gt_d4.mat'])); 
+        sceneVox =ld.sceneVox_ds;
+        ld = load(fullfile(evalvol_path,[Filename{batchId} '_vol_d4.mat']));
+        vol =ld.flipVol_ds;
+    elseif downscale ==1
+        ld = load(fullfile(groundtruth_path,[Filename{batchId} '_gt.mat'])); 
+        sceneVox =ld.sceneVox;
+        ld = load(fullfile(evalvol_path,[Filename{batchId} '_vol.mat']));
+        vol =ld.flipVol;
+    end
+    
+    
+    sceneVox(sceneVox==255|isnan(sceneVox)) = 0;
+    labelobj = mapIds(sceneVox+1);
+    predobj_conf = predobjTensor(:,:,:,:,batchId);
+    [conf_score,predobj] = max(predobj_conf,[],4);
+    predobj = predobj-1;
+    
+    
+
+    
+    surf_voxels_to_evaluate = abs(vol)<1;
+    nonfree_voxels_to_evaluate = abs(vol)<1|vol==-1;
+    resultsFullSeg(batchId) = evaluate_prediction(labelobj, predobj, nonfree_voxels_to_evaluate,classtoEvaluate);
+    resultsFullOcc(batchId) = evaluate_completion(labelobj,predobj, predobj_conf(:,:,:,1), vol,conf_threshold, distance_ds, dis_threshold);
+end
+%%
+tp = sum(reshape([resultsFullSeg.tp],length(classtoEvaluate),numoffiles)',1);
+fp = sum(reshape([resultsFullSeg.fp],length(classtoEvaluate),numoffiles)',1);
+fn = sum(reshape([resultsFullSeg.fn],length(classtoEvaluate),numoffiles)',1);
+full_precision = tp ./ (tp + fp);
+full_recall = tp ./ (tp + fn);
+full_iou = tp ./ (tp + fn + fp);
+
+fprintf('Semantic Scene Compeltion mean: \n%f,%f,%f\n',nanmean(full_precision), nanmean(full_recall),  nanmean(full_iou));
+for i = 1:length(full_recall)
+    fprintf(' %f %f %f\n', full_precision(i), full_recall(i), full_iou(i));
+end
+
+
+
+
+
+if strcmp(benchmark,'nyucad')||strcmp(benchmark,'nyu')
+   occ_precision = mean([resultsFullOcc(voxletTest).precision]);
+   occ_recall = mean([resultsFullOcc(voxletTest).recall]);
+   occ_iou = mean([resultsFullOcc(voxletTest).iou]);
+   fprintf('voxlet testset: IOU: %f,%f,%f\n',occ_precision,occ_recall, occ_iou);
+end
+
+
+
+%% Visualization
+fprintf('Visualization saved in :%s \n',fullfile(OutputPath,benchmark));
+gap = min(50,max(1,numoffiles/5));
+tovisIds = 1:gap:size(predobjTensor,5);
+for batchId = tovisIds
+    ld = load(fullfile(groundtruth_path,[Filename{batchId} '_gt_d4.mat'])); 
+    sceneVox =ld.sceneVox_ds;
+    ld = load(fullfile(evalvol_path,[Filename{batchId} '_vol_d4.mat']));
+    vol =ld.flipVol_ds;
+
+    sceneVox(sceneVox==255) = 0;
+    labelobj = mapIds(sceneVox+1);
+    
+    surf_voxels_to_evaluate = abs(vol)<1;
+    nonfree_voxels_to_evaluate = abs(vol)<1|vol==-1;
+    occ_voxels_to_evaluate = vol<0&vol>=-1;
+    labelobj(vol==1)=0;
+    
+ 
+    
+    
+   
+   
+    %% groundtruth 
+    [gridPtsX,gridPtsY,gridPtsZ] = ndgrid(downscale/2:downscale:size(vol,3)*downscale-downscale/2,...
+                                          downscale/2:downscale:size(vol,2)*downscale-downscale/2,...
+                                          downscale/2:downscale:size(vol,1)*downscale-downscale/2);
+    gridPts = [gridPtsX(:),gridPtsY(:),gridPtsZ(:)];    
+    
+    %% segmentation predictions
+    predobj_conf = predobjTensor(:,:,:,:,batchId);
+    [~,predobj] = max(predobj_conf,[],4);
+    predobj = predobj-1;
+    empty_conf = predobj_conf(:,:,:,1);
+    
+    occSegPredVal = predobj(find(nonfree_voxels_to_evaluate&predobj>0));
+    predGridPts = gridPts(find(nonfree_voxels_to_evaluate&predobj>0),:);
+    pcwrite(pointCloud(predGridPts,'Color',cls_color_mat(occSegPredVal+1,:)),fullfile(OutputPath,benchmark,['pred_obj_full_' num2str(batchId)]),'PLYFormat','binary');
+end
