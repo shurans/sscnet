@@ -13,19 +13,18 @@ def test_model():
     caffe.set_device(0)
 
     root_path = '../../../'
-    # ###########  testing on P5D use uncommoent the following three lines  ############### 
-    
-    # model_path =  'deploy_net_suncg.txt'
-    # pretrained_path = root_path + '/models/suncg.caffemodel'
-    # output_file = root_path + '/results/result_suncg.hdf5'
-    # numof_files = 470
+    ###########  testing on SUNCG use uncommoent the following three lines  ############### 
+    model_path =  'deploy_net_suncg.txt'
+    pretrained_path = root_path + '/models/suncg.caffemodel'
+    output_file = root_path + '/results/result_suncg.hdf5'
+    numof_files = 470
 
 
-    ##########  testing on NYUCAD uncommoent the following three lines ############### 
-    model_path = 'deploy_net_nyucad.txt'
-    pretrained_path = root_path + '/models/suncg_ft_nyucad.caffemodel'
-    output_file = root_path + '/results/result_nyucad.hdf5';
-    numof_files = 654    
+    # ##########  testing on NYUCAD uncommoent the following three lines ############### 
+    # model_path = 'deploy_net_nyucad.txt'
+    # pretrained_path = root_path + '/models/suncg_ft_nyucad.caffemodel'
+    # output_file = root_path + '/results/result_nyucad.hdf5';
+    # numof_files = 654    
 
     # #############  testing on NYU  uncommoent the following three lines ############### 
     # model_path  =  'deploy_net_nyu.txt'

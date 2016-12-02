@@ -8,7 +8,7 @@ dataRootfolder = '../data/';
 dbstop if error;
 hdf5Path = OutputPath;
 downscale = 4;
-addpath('./utils'); addpath('./bechmark')
+addpath('./utils'); addpath('./bechmark');
 load('ClassMapping.mat');load('voxletTest');
 %% get mapping to 11 object class: 
 obj_class = {'empty','ceiling','floor','wall','window','chair','bed','sofa','table','tvs','furn','objs'};
@@ -19,7 +19,7 @@ classtoEvaluate = [1:11];
 if strcmp(benchmark,'suncg')
    groundtruth_path = fullfile(dataRootfolder,'eval','SUNCGtest_49700_49884');
    evalvol_path = groundtruth_path;
-   load(fullfile(fullfile(dataRootfolder,'data','SUNCGtest_49700_49884','camera_list_train.mat')));
+   load(fullfile(fullfile(dataRootfolder,'depthbin','SUNCGtest_49700_49884','camera_list_train.mat')));
    for dataIdx = 1:length(dataList)
        Filename{dataIdx} = sprintf('%08d_%s_fl%03d_rm%04d_0000',dataIdx-1,dataList(dataIdx).sceneId,dataList(dataIdx).floorId,dataList(dataIdx).roomId);
    end

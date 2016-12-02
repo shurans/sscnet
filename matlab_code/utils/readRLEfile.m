@@ -1,4 +1,4 @@
-function checkVox = readRLEfile(sceneVoxFilename)
+function [checkVox,camPoseArr,voxOriginWorld] = readRLEfile(sceneVoxFilename)
 fileID = fopen(sceneVoxFilename,'r');  
 voxOriginWorld = fread(fileID,3,'single');
 camPoseArr = fread(fileID,16,'single');
