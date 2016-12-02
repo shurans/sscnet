@@ -16,7 +16,7 @@ Shuran Song, Fisher Yu,  Andy Zeng,  Angel X. Chang,  Manolis Savva,  Thomas Fun
 ### Organization
 The code organized as follow 
 ``` shell
-    sscnet_release
+    sscnet
          |-- matlab_code
          |-- caffe_code
                     |-- caffe3d_suncg
@@ -43,9 +43,12 @@ The code organized as follow
             |-- results
 ```
 ### Download 
-Download 
+Download the data run: download_data.sh (1.1 G)
+Download the pretrained models run: download_models.sh (9.9M)
 
-
+[optional]
+Download the full suncg training data models run: download_suncgTrain.sh (16 G)
+Download the result run: download_results.sh (8.2G)
 
 
 ### Installation
@@ -54,9 +57,9 @@ Download
 0. Install caffe and pycaffe. 
     1. Modify the config file base on your system 
     2. Compile  
-    `cd sscnet_release/caffe_code/caffe3d_suncg/
-    make
-    make pycaffe`
+    `cd caffe_code/caffe3d_suncg/`
+    `make`
+    `make pycaffe`
 
 0. Export path
     ``` shell 
@@ -67,36 +70,35 @@ Download
 
 ### Testing:
 0. run the testing script
-    cd sscnet_release/caffe_code/script/test
+    cd caffe_code/script/test
     python test_model.py
-0. the output result will be stored in sscnet_release/results in .hdf5 format
+0. the output result will be stored in results in .hdf5 format
 0. To test on other testset, e.g. suncg or nyu, nyucad you need to modify paths in “test_model.py”.
     
 
 
 ### Training:
 0. Fine Turning on NYU 
-    `cd sscnet_release/caffe_code/train/ftnyu
+    `cd caffe_code/train/ftnyu
       ./train.sh`
 0. Training from scratch 
-    ` cd sscnet_release/caffe_code/train/trainsuncg
+    ` cd caffe_code/train/trainsuncg
     ./train.sh`
 0. To get more training data from SUNCG, please reference the SUNCG toolbox 
     
 
 
 ### Visualization and Evaluation:
-0. After testing the result should stored in sscnet_release/results
+0. After testing the result should be stored in results/
 0. You can also download the precomputed result:
-    `  cd sscnet_release/
-    ./download_results.sh`
-0. Run the evaluation code 
-    `cd sscnet_release/matlab_code
-    evluation_script('../results/','nyucad')`
-0. The visualization “ply” files will be stored in sscnet_release/results/nyucad
-
-
-
+   `./download_results.sh`
+0. Run the evaluation code in matlab:
+``` shell 
+    matlab &
+    cd matlab_code
+    evluation_script('../results/','nyucad')
+```
+0. The visualization of results will be stored in results/nyucad as “.ply” files.
 
 
 
@@ -110,12 +112,11 @@ Download
         Followed by 16 float of camera pose in world coordinate.
         Followed the 3D volume encoded by run-length encoding.
         Please reference: ./matlab_code/utils/readRLEfile.m for more detail.
-0. Example code to convert NYU ground truth data: 
-    ./matlab_code/perpareNYUCADdata.m
-    This function provide a example of how to convert the NYU ground truth from 3D CAD model annotation provided by:
-    Guo, Ruiqi, Chuhang Zou, and Derek Hoiem. 
-    "Predicting complete 3d models of indoor scenes."
-    You need to download the original annotation by `./downlad_UIUCCAD.sh`  
+0. Example code to convert NYU ground truth data: matlab_code/perpareNYUCADdata.m
+   This function provide a example of how to convert the NYU ground truth from 3D CAD model annotation provided by:
+   Guo, Ruiqi, Chuhang Zou, and Derek Hoiem. 
+   "Predicting complete 3d models of indoor scenes."
+   You need to download the original annotation by runing `downlad_UIUCCAD.sh`  
 
 
 
