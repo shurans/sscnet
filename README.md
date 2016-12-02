@@ -57,9 +57,11 @@ Download the result run: download_results.sh (8.2G)
 0. Install caffe and pycaffe. 
     1. Modify the config file base on your system 
     2. Compile  
-    `cd caffe_code/caffe3d_suncg/`
-    `make`
-    `make pycaffe`
+    ``` shell 
+    cd caffe_code/caffe3d_suncg/
+    make
+    make pycaffe
+    ``` 
 
 0. Export path
     ``` shell 
