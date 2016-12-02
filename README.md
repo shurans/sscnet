@@ -119,9 +119,8 @@ This function provide a example of how to convert the NYU ground truth from 3D C
 ``` shell 
     Guo, Ruiqi, Chuhang Zou, and Derek Hoiem. 
     "Predicting complete 3d models of indoor scenes."
-    You need to download the original annotation by runing `downlad_UIUCCAD.sh`  
 ```
-
+You need to download the original annotation by runing `downlad_UIUCCAD.sh`.  
 
 
 ### License
