@@ -106,7 +106,7 @@ The code organized as follow
 
 
 ### Data 
-0. Date format 
+0. Data format 
     1. Depth map : 
         16 bit png with bit shifting.
         Please reference: ./matlab_code/readDepth.m about the depth format.
