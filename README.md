@@ -52,19 +52,22 @@ The code organized as follow
 
 
 ### Installation
-0. Requirements: matlab, opencv, cudnn
+0. Software Requirements: 
+   1. Requirements for `Caffe` and `pycaffe` (see: [Caffe installation instructions](http://caffe.berkeleyvision.org/installation.html))
+   2. Matlab
+   3. OPENCV
 0. Hardware Requirements:  At least 12G GPU memory.
 0. Install caffe and pycaffe. 
-    1. Modify the config file base on your system 
+    1. Modify the config file base on your system. You can reference Makefile.config.sscnet_example.
     2. Compile  
-    ``` shell 
-    cd caffe_code/caffe3d_suncg/
-    make
-    make pycaffe
-    ``` 
-
+    ```Shell
+    cd caffe3d_suncg
+    # Now follow the Caffe installation instructions here:
+    #   http://caffe.berkeleyvision.org/installation.html
+    make -j8 && make pycaffe
+    ```
 0. Export path
-    ``` shell 
+    ```Shell 
     export LD_LIBRARY_PATH=~/build_master_release/lib:/usr/local/cudnn/v5/lib64:~/anaconda2/lib:$LD_LIBRARY_PATH
     export PYTHONPATH=~/build_master_release/python:$PYTHONPATH
     ```
@@ -75,12 +78,12 @@ The code organized as follow
     cd caffe_code/script/test
     python test_model.py
 0. the output result will be stored in results in .hdf5 format
-0. To test on other testset, e.g. suncg or nyu, nyucad you need to modify paths in “test_model.py”.
+0. To test on other testset, e.g. suncg, nyu, nyucad you need to modify paths in “test_model.py”.
     
 
 
 ### Training:
-0. Fine Turning on NYU 
+0. Fine tuning on NYU 
     `cd caffe_code/train/ftnyu
       ./train.sh`
 0. Training from scratch 
