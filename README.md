@@ -111,16 +111,13 @@ Download the result run: download_results.sh (8.2G)
         Please reference: ./matlab_code/readDepth.m about the depth format.
     2. 3D volume: 
         First three float stores the origin of the 3D volume in world coordinate.
-        Followed by 16 float of camera pose in world coordinate.
-        Followed the 3D volume encoded by run-length encoding.
+        Then 16 float of camera pose in world coordinate.
+        Followed by the 3D volume encoded by run-length encoding.
         Please reference: ./matlab_code/utils/readRLEfile.m for more detail.
 0. Example code to convert NYU ground truth data: `matlab_code/perpareNYUCADdata.m` 
-This function provide a example of how to convert the NYU ground truth from 3D CAD model annotation provided by:
-``` shell 
-    Guo, Ruiqi, Chuhang Zou, and Derek Hoiem. 
-    "Predicting complete 3d models of indoor scenes."
-```
-You need to download the original annotation by runing `downlad_UIUCCAD.sh`.  
+   This function provide a example of how to convert the NYU ground truth from 3D CAD model annotation provided by:
+   Guo, Ruiqi, Chuhang Zou, and Derek Hoiem. "Predicting complete 3d models of indoor scenes."
+   You need to download the original annotation by runing `downlad_UIUCCAD.sh`.  
 
 
 ### License
