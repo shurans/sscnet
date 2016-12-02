@@ -1,7 +1,3 @@
-//
-// Created by Fisher Yu on 8/13/16.
-//
-
 #include <ctime>
 #include <string>
 #include <random>

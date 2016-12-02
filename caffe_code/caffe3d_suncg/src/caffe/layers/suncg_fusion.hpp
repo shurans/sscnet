@@ -1,7 +1,3 @@
-//
-// Created by Fisher Yu on 8/13/16.
-//
-
 #ifndef CAFFE_SUNCG_FUSION_HPP_HPP
 #define CAFFE_SUNCG_FUSION_HPP_HPP
 
