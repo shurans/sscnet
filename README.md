@@ -43,12 +43,12 @@ The code organized as follow
             |-- results
 ```
 ### Download 
-Download the data run: download_data.sh (1.1 G)
-Download the pretrained models run: download_models.sh (9.9M)
+0. Download the data: download_data.sh (1.1 G)
+0. Download the pretrained models: download_models.sh (9.9M)
 
 [optional]
-Download the full suncg training data models run: download_suncgTrain.sh (16 G)
-Download the result run: download_results.sh (8.2G)
+0. Download the full suncg training data models: download_suncgTrain.sh (16 G)
+0. Download the results: download_results.sh (8.2G)
 
 
 ### Installation
