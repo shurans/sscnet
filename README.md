@@ -45,10 +45,8 @@ The code organized as follow
 ### Download 
 0. Download the data: download_data.sh (1.1 G)
 0. Download the pretrained models: download_models.sh (9.9M)
-
-[optional]
-0. Download the full suncg training data models: download_suncgTrain.sh (16 G)
-0. Download the results: download_results.sh (8.2G)
+0. [optional] Download the full suncg training data models: download_suncgTrain.sh (16 G)
+0. [optional] Download the results: download_results.sh (8.2G)
 
 
 ### Installation
@@ -61,7 +59,7 @@ The code organized as follow
     1. Modify the config file base on your system. You can reference Makefile.config.sscnet_example.
     2. Compile  
     ```Shell
-    cd caffe3d_suncg
+    cd caffe_code/caffe3d_suncg
     # Now follow the Caffe installation instructions here:
     #   http://caffe.berkeleyvision.org/installation.html
     make -j8 && make pycaffe
