@@ -18,7 +18,7 @@ The code organized as follow
 ``` shell
     sscnet_release
          |-- matlab_code
-            |-- caffe_code
+         |-- caffe_code
                     |-- caffe3d_suncg
                     |-- script
                          |-train
@@ -26,6 +26,8 @@ The code organized as follow
          |-- data
                 |-- depthbin
                     |-- NYUtrain 
+                        |-- xxxxx_0000.png
+                        |-- xxxxx_0000.bin
                     |-- NYUtest
                     |-- NYUCADtrain
                     |-- NYUCADtest
@@ -87,7 +89,7 @@ Download
 0. After testing the result should stored in sscnet_release/results
 0. You can also download the precomputed result:
     `  cd sscnet_release/
-    ./download_result.sh`
+    ./download_results.sh`
 0. Run the evaluation code 
     `cd sscnet_release/matlab_code
     evluation_script('../results/','nyucad')`
