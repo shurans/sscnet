@@ -65,10 +65,10 @@ The code organized as follow
     make -j8 && make pycaffe
     ```
 0. Export path
-   ```Shell 
-   export LD_LIBRARY_PATH=~/build_master_release/lib:/usr/local/cudnn/v5/lib64:~/anaconda2/lib:$LD_LIBRARY_PATH
-   export PYTHONPATH=~/build_master_release/python:$PYTHONPATH
-   ```
+     ```Shell 
+     export LD_LIBRARY_PATH=~/build_master_release/lib:/usr/local/cudnn/v5/lib64:~/anaconda2/lib:$LD_LIBRARY_PATH
+     export PYTHONPATH=~/build_master_release/python:$PYTHONPATH
+     ```
 
 ### Quick Demo:
   ```Shell 
