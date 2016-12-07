@@ -14,7 +14,7 @@ Shuran Song, Fisher Yu,  Andy Zeng,  Angel X. Chang,  Manolis Savva,  Thomas Fun
 
 
 ### Organization
-The code organized as follow 
+The code and data is organized as follows:
 ``` shell
     sscnet
          |-- matlab_code
@@ -56,7 +56,7 @@ The code organized as follow
    3. OPENCV
 0. Hardware Requirements:  at least 12G GPU memory.
 0. Install caffe and pycaffe. 
-    1. Modify the config file base on your system. You can reference Makefile.config.sscnet_example.
+    1. Modify the config files based on your system. You can reference Makefile.config.sscnet_example.
     2. Compile  
     ```Shell
     cd caffe_code/caffe3d_suncg
@@ -76,32 +76,32 @@ The code organized as follow
   cd demo
   python demotest_model.py
   ```
-This demo runs semantic scene compeletion on one NYU depth map using pertrained model and outputs one '.ply' visulization of the result.
+This demo runs semantic scene compeletion on one NYU depth map using our pretrained model and outputs a '.ply' visulization of the result.
 
 
 ### Testing:
-0. run the testing script
+0. Run the testing script
   ` cd caffe_code/script/test
     python test_model.py`
-0. the output result will be stored in results in .hdf5 format
-0. To test on other testset, e.g. suncg, nyu, nyucad you need to modify paths in “test_model.py”.
+0. The output results will be stored in folder `results` in .hdf5 format
+0. To test on other testsets (e.g. suncg, nyu, nyucad) you need to modify the paths in “test_model.py”.
     
 
 
 ### Training:
-0. Fine tuning on NYU 
+0. Finetuning on NYU 
     `cd caffe_code/train/ftnyu
       ./train.sh`
 0. Training from scratch 
     ` cd caffe_code/train/trainsuncg
     ./train.sh`
-0. To get more training data from SUNCG, please reference the SUNCG toolbox 
+0. To get more training data from SUNCG, please refer to the SUNCG toolbox 
     
 
 
 ### Visualization and Evaluation:
-0. After testing the result should be stored in results/
-0. You can also download the precomputed result:
+0. After testing, the results should be stored in folder `results/`
+0. You can also download our precomputed results:
    `./download_results.sh`
 0. Run the evaluation code in matlab:
 ``` shell 
@@ -109,7 +109,7 @@ This demo runs semantic scene compeletion on one NYU depth map using pertrained 
     cd matlab_code
     evluation_script('../results/','nyucad')
 ```
-0. The visualization of results will be stored in results/nyucad as “.ply” files.
+0. The visualization of results will be stored in `results/nyucad` as “.ply” files.
 
 
 
@@ -122,11 +122,11 @@ This demo runs semantic scene compeletion on one NYU depth map using pertrained 
         First three float stores the origin of the 3D volume in world coordinate.
         Then 16 float of camera pose in world coordinate.
         Followed by the 3D volume encoded by run-length encoding.
-        Please reference: ./matlab_code/utils/readRLEfile.m for more detail.
+        Please reference: `./matlab_code/utils/readRLEfile.m` for more details.
 0. Example code to convert NYU ground truth data: `matlab_code/perpareNYUCADdata.m` 
-   This function provide a example of how to convert the NYU ground truth from 3D CAD model annotation provided by:
+   This function provides an example of how to convert the NYU ground truth from 3D CAD model annotations provided by:
    Guo, Ruiqi, Chuhang Zou, and Derek Hoiem. "Predicting complete 3d models of indoor scenes."
-   You need to download the original annotation by runing `downlad_UIUCCAD.sh`.  
+   You need to download the original annotations by runing `download_UIUCCAD.sh`.  
 
 
 ### License
