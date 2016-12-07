@@ -5,7 +5,7 @@ Shuran Song, Fisher Yu,  Andy Zeng,  Angel X. Chang,  Manolis Savva,  Thomas Fun
 ### Contents
 0. [Organization](#organization)
 0. [Installation](#installation)
-0. [Requirements: hardware](#requirements-hardware)
+0. [Quick Demo](#quick-demo)
 0. [Testing](#testing)
 0. [Training](#training)
 0. [Visualization and Evaluation](#visualization-and-evaluation)
