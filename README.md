@@ -45,7 +45,7 @@ The code organized as follow
 ### Download 
 0. Download the data: download_data.sh (1.1 G)
 0. Download the pretrained models: download_models.sh (9.9M)
-0. [optional] Download the full suncg training data models: download_suncgTrain.sh (16 G)
+0. [optional] Download the training data: download_suncgTrain.sh (16 G)
 0. [optional] Download the results: download_results.sh (8.2G)
 
 
@@ -54,7 +54,7 @@ The code organized as follow
    1. Requirements for `Caffe` and `pycaffe` (see: [Caffe installation instructions](http://caffe.berkeleyvision.org/installation.html))
    2. Matlab
    3. OPENCV
-0. Hardware Requirements:  At least 12G GPU memory.
+0. Hardware Requirements:  at least 12G GPU memory.
 0. Install caffe and pycaffe. 
     1. Modify the config file base on your system. You can reference Makefile.config.sscnet_example.
     2. Compile  
@@ -65,17 +65,17 @@ The code organized as follow
     make -j8 && make pycaffe
     ```
 0. Export path
-    ```Shell 
-    export LD_LIBRARY_PATH=~/build_master_release/lib:/usr/local/cudnn/v5/lib64:~/anaconda2/lib:$LD_LIBRARY_PATH
-    export PYTHONPATH=~/build_master_release/python:$PYTHONPATH
-    ```
+   ```Shell 
+   export LD_LIBRARY_PATH=~/build_master_release/lib:/usr/local/cudnn/v5/lib64:~/anaconda2/lib:$LD_LIBRARY_PATH
+   export PYTHONPATH=~/build_master_release/python:$PYTHONPATH
+   ```
 
 ### Quick Demo:
   ```Shell 
   cd demo
   python demotest_model.py
   ```
-This demo runs semantic scene compeletion on one NYU depth map using pertrained model and outputs one 'ply' visulization of the result
+This demo runs semantic scene compeletion on one NYU depth map using pertrained model and outputs one '.ply' visulization of the result.
 
 
 ### Testing:
