@@ -104,11 +104,11 @@ This demo runs semantic scene compeletion on one NYU depth map using our pretrai
 0. You can also download our precomputed results:
    `./download_results.sh`
 0. Run the evaluation code in matlab:
-``` shell 
-    matlab &
-    cd matlab_code
-    evluation_script('../results/','nyucad')
-```
+    ``` shell 
+        matlab &
+        cd matlab_code
+        evluation_script('../results/','nyucad')
+    ```
 0. The visualization of results will be stored in `results/nyucad` as “.ply” files.
 
 
@@ -117,12 +117,12 @@ This demo runs semantic scene compeletion on one NYU depth map using our pretrai
 0. Data format 
     1. Depth map : 
         16 bit png with bit shifting.
-        Please reference: ./matlab_code/readDepth.m about the depth format.
+        Please refer to `./matlab_code/readDepth.m` for more information about the depth format.
     2. 3D volume: 
         First three float stores the origin of the 3D volume in world coordinate.
         Then 16 float of camera pose in world coordinate.
         Followed by the 3D volume encoded by run-length encoding.
-        Please reference: `./matlab_code/utils/readRLEfile.m` for more details.
+        Please refer to `./matlab_code/utils/readRLEfile.m` for more details.
 0. Example code to convert NYU ground truth data: `matlab_code/perpareNYUCADdata.m` 
    This function provides an example of how to convert the NYU ground truth from 3D CAD model annotations provided by:
    Guo, Ruiqi, Chuhang Zou, and Derek Hoiem. "Predicting complete 3d models of indoor scenes."
