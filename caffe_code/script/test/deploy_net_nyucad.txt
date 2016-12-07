@@ -15,9 +15,9 @@ layer {
     crop_size: 240
     crop_size: 144
     crop_size: 240
-    label_size: 240
-    label_size: 144
-    label_size: 240
+    label_size: 60
+    label_size: 36
+    label_size: 60
     seg_classes: 11
     shuffle: 0
     occ_empty_only: true

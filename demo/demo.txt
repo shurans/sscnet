@@ -5,12 +5,7 @@ layer {
   top: "seg_label"
   top: "seg_weight"
   suncg_data_param {
-    file_data: "../../../../data/depthbin/SUNCGtrain_1_500"
-    file_data: "../../../../data/depthbin/SUNCGtrain_501_1000"
-    file_data: "../../../../data/depthbin/SUNCGtrain_1001_2000"
-    file_data: "../../../../data/depthbin/SUNCGtrain_1001_3000"
-    file_data: "../../../../data/depthbin/SUNCGtrain_3001_5000"
-    file_data: "../../../../data/depthbin/SUNCGtrain_5001_7000"
+    file_data: "."
     file_list: ""
     vox_unit: 0.02
     vox_margin: 0.24
@@ -24,7 +19,7 @@ layer {
     label_size: 36
     label_size: 60
     seg_classes: 11
-    shuffle: true
+    shuffle: 0
     occ_empty_only: true
     neg_obj_sample_ratio: 2
     seg_class_map: 0
@@ -87,7 +82,6 @@ layer {
     batch_size: 1
     tsdf_type: 1
     data_type: TSDF
-    surf_only: false
   }
 }
 layer {
@@ -613,13 +607,8 @@ layer {
   }
 }
 layer {
-  name: "loss"
-  type: "SoftmaxWithLoss"
+  name: "prob"
+  type: "Softmax"
   bottom: "fc12"
-  bottom: "seg_label"
-  bottom: "seg_weight"
-  top: "loss"
-  loss_param {
-    ignore_label: 255
-  }
+  top: "prob"
 }

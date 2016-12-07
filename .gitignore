@@ -2,6 +2,8 @@
 *.caffemodel
 
 *.solverstate
+*.hdf5
+
 
 .smb*
 

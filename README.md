@@ -70,11 +70,18 @@ The code organized as follow
     export PYTHONPATH=~/build_master_release/python:$PYTHONPATH
     ```
 
+### Quick Demo:
+  ```Shell 
+  cd demo
+  python demotest_model.py
+  ```
+This demo runs semantic scene compeletion on one NYU depth map using pertrained model and outputs one 'ply' visulization of the result
+
 
 ### Testing:
 0. run the testing script
-    cd caffe_code/script/test
-    python test_model.py
+  ` cd caffe_code/script/test
+    python test_model.py`
 0. the output result will be stored in results in .hdf5 format
 0. To test on other testset, e.g. suncg, nyu, nyucad you need to modify paths in “test_model.py”.
     
