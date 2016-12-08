@@ -117,7 +117,7 @@ This demo runs semantic scene compeletion on one NYU depth map using our pretrai
 0. Data format 
     1. Depth map : 
         16 bit png with bit shifting.
-        Please refer to `./matlab_code/readDepth.m` for more information about the depth format.
+        Please refer to `./matlab_code/utils/readDepth.m` for more information about the depth format.
     2. 3D volume: 
         First three float stores the origin of the 3D volume in world coordinate.
         Then 16 float of camera pose in world coordinate.
