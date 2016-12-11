@@ -1,6 +1,15 @@
 # Semantic Scene Completion from a Single Depth Image
-Shuran Song, Fisher Yu,  Andy Zeng,  Angel X. Chang,  Manolis Savva,  Thomas Funkhouser  
+Shuran Song, Fisher Yu,  Andy Zeng,  Angel X. Chang,  Manolis Savva,  Thomas Funkhouser 
+This repo contains training and tesing code for our paper on semantic scene completion, a task for producing a complete 3D voxel representation of volumetric occupancy and semantic labels for a scene from a single-view depth map observation. 
+![teaser](image/teaser.jpg)
+If you find [SSCNet](http://sscnet.cs.princeton.edu/) useful in your research, please cite:
 
+    @inproceedings{SSCNet,
+        author     = {Shuran Song, Fisher Yu, Andy Zeng,  Angel X. Chang,  Manolis Savva, Thomas Funkhouser},
+        title      = {{S}emantic {S}cene {C}ompletion from a {S}ingle {D}epth {I}mage},
+        booktitle  = arXiv,
+        year       = {2016},
+    }
 
 ### Contents
 0. [Organization](#organization)
