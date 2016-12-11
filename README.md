@@ -114,10 +114,11 @@ This demo runs semantic scene compeletion on one NYU depth map using our pretrai
 0. You can also download our precomputed results:
    `./download_results.sh`
 0. Run the evaluation code in matlab:
+
     ``` shell 
-        matlab &
-        cd matlab_code
-        evluation_script('../results/','nyucad')
+    matlab &
+    cd matlab_code
+    evluation_script('../results/','nyucad')
     ```
 0. The visualization of results will be stored in `results/nyucad` as “.ply” files.
 
