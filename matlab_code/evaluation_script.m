@@ -1,4 +1,4 @@
-function evluation_script(OutputPath,benchmark)
+function evaluation_script(OutputPath,benchmark)
 % example: 
 % evluation_script('../results/','nyu')
 % evluation_script('../results/','nyucad')
