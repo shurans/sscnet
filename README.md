@@ -7,11 +7,11 @@ More information about the project can be found in our [paper](https://arxiv.org
 
 If you find [SSCNet](http://sscnet.cs.princeton.edu/) useful in your research, please cite:
 
-    @inproceedings{SSCNet,
-        author     = {Shuran Song, Fisher Yu, Andy Zeng,  Angel X. Chang,  Manolis Savva, Thomas Funkhouser},
-        title      = {{S}emantic {S}cene {C}ompletion from a {S}ingle {D}epth {I}mage},
-        booktitle  = arXiv,
-        year       = {2016},
+    @article{song2016ssc,
+      author     = {Song, Shuran and Yu, Fisher  and Zeng, Andy and Chang, Angel X and Savva, Manolis and Funkhouser, Thomas},
+      title      = {Semantic Scene Completion from a Single Depth Image},
+      journal    = {arXiv preprint arXiv:1611.08974},
+      year       = {2016},
     }
 
 ### Contents
