@@ -8,7 +8,7 @@ dataRootfolder = '../data/';
 dbstop if error;
 hdf5Path = OutputPath;
 downscale = 4;
-addpath('./utils'); addpath('./bechmark');
+addpath('./utils'); addpath('./benchmark');
 load('ClassMapping.mat');load('voxletTest');
 %% get mapping to 11 object class: 
 obj_class = {'empty','ceiling','floor','wall','window','chair','bed','sofa','table','tvs','furn','objs'};
@@ -27,7 +27,7 @@ if strcmp(benchmark,'suncg')
    result_filename  ='result_suncg.hdf5';
 else
    groundtruth_path = fullfile(dataRootfolder,'eval','NYUCADtest');
-   load('./bechmark/test_NYUv2images.mat')
+   load('./benchmark/test_NYUv2images.mat')
    for dataIdx = 1:length(testSeq)
        Id = str2double(testSeq{dataIdx}(length('/n/fs/sun3d/data/NYUv2images/NYU')+1:end-1));
        Filename{dataIdx} = sprintf('NYU%04d_0000',Id);

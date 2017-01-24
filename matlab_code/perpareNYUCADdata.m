@@ -10,7 +10,7 @@ test = 1; % set it to 0 to save out files for training images
 savefiles = 0; % set it to 1 to save out files it might overright existing files
 
 addpath('./utils'); 
-addpath('./bechmark');
+addpath('./benchmark');
 addpath('./mesh2voxel');
 getcolorPalette;
 colorPalette = [colorPalette;0.7*colorPalette;0.5*colorPalette];
