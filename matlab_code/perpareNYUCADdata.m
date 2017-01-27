@@ -21,12 +21,12 @@ mapNYU894To40Ids =[0,mapNYU894To40Ids];
 mapNYU40to36Ids =[0,mapNYU40to36Ids];
 
 if test
-    load('test_NYUv2images.mat')
+    load('./benchmark/test_NYUv2Ids.mat')
     allSeq = testSeq;
     outFolder = fullfile(dataRootfolder,'depthbin','/NYUCADtest/');
     outputmatPath = fullfile(dataRootfolder,'eval','NYUCADtest');
 else
-    load('train_NYUv2images.mat')
+    load('./benchmark/train_NYUv2Ids.mat')
     allSeq = trainSeq;
     outFolder = fullfile(dataRootfolder,'depthbin','/NYUCADtrain/');
     outputmatPath = fullfile(dataRootfolder,'eval','NYUCADtrain');
@@ -43,7 +43,7 @@ end
 volume_param;
 for i = 1:length(allSeq)
     %% get Id 
-    Id = str2double(allSeq{i}(length('/n/fs/sun3d/data/NYUv2images/NYU')+1:end-1)); 
+    Id = allSeq(i);  
     matdata_name = allannote(find(count_id ==Id)).name;
     depthFilename = fullfile(outFolder, sprintf('NYU%04d_0000.png',Id));
     sceneVoxFilename = [depthFilename(1:(end-4)),'.bin'];

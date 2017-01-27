@@ -17,9 +17,9 @@ mapIds = [0,mapIds];
 classtoEvaluate = [1:11];
 
 if strcmp(benchmark,'suncg')
-   groundtruth_path = fullfile(dataRootfolder,'eval','SUNCGtest_49700_49884');
+   groundtruth_path = fullfile(dataRootfolder,'eval','SUNCGtest');
    evalvol_path = groundtruth_path;
-   load(fullfile(fullfile(dataRootfolder,'depthbin','SUNCGtest_49700_49884','camera_list_train.mat')));
+   load(fullfile(fullfile(dataRootfolder,'depthbin','SUNCGtest','camera_list_train.mat')));
    for dataIdx = 1:length(dataList)
        Filename{dataIdx} = sprintf('%08d_%s_fl%03d_rm%04d_0000',dataIdx-1,dataList(dataIdx).sceneId,dataList(dataIdx).floorId,dataList(dataIdx).roomId);
    end
@@ -27,9 +27,9 @@ if strcmp(benchmark,'suncg')
    result_filename  ='result_suncg.hdf5';
 else
    groundtruth_path = fullfile(dataRootfolder,'eval','NYUCADtest');
-   load('./benchmark/test_NYUv2images.mat')
-   for dataIdx = 1:length(testSeq)
-       Id = str2double(testSeq{dataIdx}(length('/n/fs/sun3d/data/NYUv2images/NYU')+1:end-1));
+   load('./benchmark/test_NYUv2Ids.mat')
+   for dataIdx = 1:length(testSeqId)
+       Id = testSeqId(dataIdx); 
        Filename{dataIdx} = sprintf('NYU%04d_0000',Id);
    end
    if strcmp(benchmark,'nyucad')
