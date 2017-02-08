@@ -54,6 +54,5 @@ function [voxels,scale,translate] = read_binvox(filename)
          end
          % matlab's strange ordering 
          voxels = permute(voxels,[3,1,2]);
-%          fprintf('read %d voxels\n',nr_voxels);
          fclose(fid);
 end

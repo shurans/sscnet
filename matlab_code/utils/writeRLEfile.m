@@ -1,4 +1,7 @@
 function  writeRLEfile(sceneVoxFilename, sceneVox,camPoseArr,voxOriginWorld)
+        % Compress with RLE and save to binary file (first value represents how
+        % many numbers are saved to the binary file)
+        % Save vox origin in world coordinates as first three values
         sceneVoxArr = sceneVox(:);
         sceneVoxGrad = sceneVoxArr(2:end)-sceneVoxArr(1:(end-1));
         sceneVoxPeaks = find(abs(sceneVoxGrad) > 0);
