@@ -142,12 +142,14 @@ This demo runs semantic scene compeletion on one NYU depth map using our pretrai
    You need to download the original annotations by runing `download_UIUCCAD.sh`.  
 
 ### Generating training data from SUNCG
+
 You can generate more training data from SUNCG by following steps: 
+
 0. Download SUNCG data and toolbox from: https://github.com/shurans/SUNCGtoolbox
 0. Compile the toolbox.
-0. Download the voxel data for objects (`download_objectvox.sh`) and mv the folder under SUNCG data directory. 
+0. Download the voxel data for objects (`download_objectvox.sh`) and move the folder under SUNCG data directory. 
 0. Run the script: genSUNCGdataScript()
-   You may need to modify the following paths to point to the data and toolbox:`suncgDataPath`, `SUNCGtoolboxPath`, and `outputdir`.
+   You may need to modify the following paths:`suncgDataPath`, `SUNCGtoolboxPath`, `outputdir`.
 
 ### License
 Code is released under the MIT License (refer to the LICENSE file for details).
