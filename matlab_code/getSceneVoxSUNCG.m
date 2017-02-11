@@ -1,5 +1,5 @@
 function [sceneVox, voxOriginWorld] = getSceneVoxSUNCG(pathToData,sceneId,floorId,roomId,extCam2World)
-% Notes: grid is Z up while the The loaded houses are y up 
+% Notes: grid is Z up while the The loaded houses are Y up 
 %{
 pathToData = '/n/fs/suncg/data/planner5d/';
 sceneId = '000514ade3bcc292a613a4c2755a5050';
