@@ -16,7 +16,7 @@ function genSUNCGdataScript(sceneId)
     cameraInfofile = sprintf('/%s/%s.caminfo',outputdir, sceneId);
     projectpath = fullfile(suncgDataPath,'house',sceneId);
     cmd_gencamera = sprintf('unset LD_LIBRARY_PATH;\n cd  %s \n %s/scn2cam house.json %s -create_room_cameras -output_camera_names %s -eye_height_radius 0.25 -eye_height 1.5 -xfov 0.55 -v %s',...
-                            projectpath, pathtogaps, camerafile, cameraInfofile, sceneId, usemeasa);
+                            projectpath, pathtogaps, camerafile, cameraInfofile, usemeasa);
     system(cmd_gencamera);
     
     %% generating depth images
