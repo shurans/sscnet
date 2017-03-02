@@ -43,7 +43,7 @@ function genSUNCGdataScript(sceneId)
         extCam2World = [[1 0 0; 0 0 1; 0 1 0]*extCam2World(1:3,1:3) extCam2World([1,3,2],4)];
         
         %% generating scene voxels in camera view 
-        [sceneVox, voxOriginWorld] = getSceneVoxSUNCG(pathToData,sceneId,cameraInfo(cameraId).floorId+1,cameraInfo(cameraId).roomId+1,extCam2World);
+        [sceneVox, voxOriginWorld] = getSceneVoxSUNCG(suncgToolboxPath,sceneId,cameraInfo(cameraId).floorId+1,cameraInfo(cameraId).roomId+1,extCam2World);
         camPoseArr = [extCam2World',[0;0;0;1]];
         camPoseArr = camPoseArr(:);
         

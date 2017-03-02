@@ -64,7 +64,7 @@ The code and data is organized as follows:
 ### Installation
 0. Software Requirements: 
    1. Requirements for `Caffe` and `pycaffe` (see: [Caffe installation instructions](http://caffe.berkeleyvision.org/installation.html))
-   2. Matlab
+   2. Matlab 2016a or above with vision toolbox 
    3. OPENCV
 0. Hardware Requirements:  at least 12G GPU memory.
 0. Install caffe and pycaffe. 
