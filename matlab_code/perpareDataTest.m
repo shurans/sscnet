@@ -1,5 +1,5 @@
 function perpareDataTest()
-    % This function provide a example of how to generate your own testing
+    % This function provides an example of generating your own testing
     % data without ground truth labels. It will generate a the .bin file
     % with camera pose and an empty volume, without room boundary.
     % To generate training data with NYU dataset and SUNCG dataset with
