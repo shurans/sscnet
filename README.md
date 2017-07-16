@@ -141,7 +141,7 @@ This demo runs semantic scene compeletion on one NYU depth map using our pretrai
    Guo, Ruiqi, Chuhang Zou, and Derek Hoiem. "Predicting complete 3d models of indoor scenes."
    You need to download the original annotations by runing `download_UIUCCAD.sh`.  
 0. Example code to generate testing data without ground truth and room boundary: `matlab_code/perpareDataTest.m`
-   This function provide a example of how to generate your own testing data without ground truth labels. It will generate a the .bin file with camera pose and an empty volume, without room boundary. 
+   This function provides an example of how to generate your own testing data without ground truth labels. It will generate a the .bin file with camera pose and an empty volume, without room boundary. 
    
 
 ### Generating training data from SUNCG
