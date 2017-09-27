@@ -55,7 +55,7 @@ The code and data is organized as follows:
             |-- results
 ```
 ### Download 
-0. Download the data: download_data.sh (1.1 G)
+0. Download the data: download_data.sh (1.1 G) *Updated on Sep 27 2017*
 0. Download the pretrained models: download_models.sh (9.9M)
 0. [optional] Download the training data: download_suncgTrain.sh (16 G)
 0. [optional] Download the results: download_results.sh (8.2G)
