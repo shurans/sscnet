@@ -55,7 +55,7 @@ The code and data is organized as follows:
             |-- results
 ```
 ### Download 
-0. Download the data: download_data.sh (1.1 G)
+0. Download the data: download_data.sh (1.1 G) *Updated on Sep 27 2017*
 0. Download the pretrained models: download_models.sh (9.9M)
 0. [optional] Download the training data: download_suncgTrain.sh (16 G)
 0. [optional] Download the results: download_results.sh (8.2G)
@@ -140,6 +140,9 @@ This demo runs semantic scene compeletion on one NYU depth map using our pretrai
    This function provides an example of how to convert the NYU ground truth from 3D CAD model annotations provided by:
    Guo, Ruiqi, Chuhang Zou, and Derek Hoiem. "Predicting complete 3d models of indoor scenes."
    You need to download the original annotations by runing `download_UIUCCAD.sh`.  
+0. Example code to generate testing data without ground truth and room boundary: `matlab_code/perpareDataTest.m`
+   This function provides an example of how to generate your own testing data without ground truth labels. It will generate a the .bin file with camera pose and an empty volume, without room boundary. 
+   
 
 ### Generating training data from SUNCG
 
@@ -150,6 +153,10 @@ You can generate more training data from SUNCG by following steps:
 0. Download the voxel data for objects (`download_objectvox.sh`) and move the folder under SUNCG data directory. 
 0. Run the script: genSUNCGdataScript()
    You may need to modify the following paths:`suncgDataPath`, `SUNCGtoolboxPath`, `outputdir`.
+
+ 
+
+
 
 ### License
 Code is released under the MIT License (refer to the LICENSE file for details).

@@ -4,7 +4,8 @@ function perpareNYUCADdata()
 % Guo, Ruiqi, Chuhang Zou, and Derek Hoiem. 
 %"Predicting complete 3d models of indoor scenes."
 
-dataRootfolder = '../data/'; %dataRootfolder = '/n/fs/suncg/voxelLabelComplete/sscnet_release/data';
+dataRootfolder = '../data/'; 
+dataRootfolder = '/n/fs/suncg/voxelLabelComplete/sscnet_release/data';
 CAD_3D_gtpath  = '../NYUCAD_3D/';
 test = 1; % set it to 0 to save out files for training images
 savefiles = 0; % set it to 1 to save out files it might overright existing files
