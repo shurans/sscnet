@@ -19,7 +19,7 @@ function perpareDataTest()
     % Find the floor
     point_t = R*XYZ';
     
-    floorHeight = prctile(point_t(:,2),2);
+    floorHeight = prctile(point_t(2,:),2);
     
     % transformation
     transform = [0,0,-1*floorHeight];
