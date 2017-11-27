@@ -30,42 +30,51 @@ roomStruct = house.levels{floorId}.nodes{roomId};
 floorStruct = house.levels{floorId};
 
 % find all grid in the room 
-floorObj = read_wobj([fullfile(pathToData,'room',sceneId,roomStruct.modelId) 'f.obj']);
-inRoom = zeros(size(gridPtsWorldX));
-for i = 1:length(floorObj.objects(3).data.vertices)
-    faceId = floorObj.objects(3).data.vertices(i,:);
-    floorP = floorObj.vertices(faceId,[1,3])';
-    inRoom = inRoom|inpolygon(gridPtsWorldX,gridPtsWorldY,floorP(1,:),floorP(2,:));
+if exist([fullfile(pathToData,'room',sceneId,roomStruct.modelId) 'f.obj'],'file')
+  floorObj = read_wobj([fullfile(pathToData,'room',sceneId,roomStruct.modelId) 'f.obj']);
+  inRoom = zeros(size(gridPtsWorldX));
+  for i = 1:length(floorObj.objects(3).data.vertices)
+      faceId = floorObj.objects(3).data.vertices(i,:);
+      floorP = floorObj.vertices(faceId,[1,3])';
+      inRoom = inRoom|inpolygon(gridPtsWorldX,gridPtsWorldY,floorP(1,:),floorP(2,:));
+  end
+  
+  % find floor 
+  floorZ = mean(floorObj.vertices(:,2));
+  gridPtsObjWorldInd = inRoom(:)'&(abs(gridPtsWorld(3,:)-floorZ) <= voxUnit/2);
+  [~,classRootId] = getobjclassSUNCG('floor',objcategory);
+  gridPtsLabel(gridPtsObjWorldInd) = classRootId;  
 end
 
-% find floor 
-floorZ = mean(floorObj.vertices(:,2));
-gridPtsObjWorldInd = inRoom(:)'&(abs(gridPtsWorld(3,:)-floorZ) <= voxUnit/2);
-[~,classRootId] = getobjclassSUNCG('floor',objcategory);
-gridPtsLabel(gridPtsObjWorldInd) = classRootId;  
+
 
 % find ceiling 
-ceilObj = read_wobj([fullfile(pathToData,'room',sceneId,roomStruct.modelId) 'c.obj']);
-ceilZ = mean(ceilObj.vertices(:,2));
-gridPtsObjWorldInd = inRoom(:)'&abs(gridPtsWorld(3,:)-ceilZ) <= voxUnit/2;
-[~,classRootId] = getobjclassSUNCG('ceiling',objcategory);
-gridPtsLabel(gridPtsObjWorldInd) = classRootId;  
+if exist([fullfile(pathToData,'room',sceneId,roomStruct.modelId) 'c.obj'],'file')
+  ceilObj = read_wobj([fullfile(pathToData,'room',sceneId,roomStruct.modelId) 'c.obj']);
+  ceilZ = mean(ceilObj.vertices(:,2));
+  gridPtsObjWorldInd = inRoom(:)'&abs(gridPtsWorld(3,:)-ceilZ) <= voxUnit/2;
+  [~,classRootId] = getobjclassSUNCG('ceiling',objcategory);
+  gridPtsLabel(gridPtsObjWorldInd) = classRootId;  
+end
+
 
 % Load walls
-WallObj = read_wobj([fullfile(pathToData,'room',sceneId,roomStruct.modelId) 'w.obj']);
-inWall = zeros(size(gridPtsWorldX));
-for oi = 1:length(WallObj.objects)
-    if WallObj.objects(oi).type == 'f'
-        for i = 1:length(WallObj.objects(oi).data.vertices)
-            faceId = WallObj.objects(oi).data.vertices(i,:);
-            floorP = WallObj.vertices(faceId,[1,3])';
-            inWall = inWall|inpolygon(gridPtsWorldX,gridPtsWorldY,floorP(1,:),floorP(2,:));
-        end
-    end
+if exist([fullfile(pathToData,'room',sceneId,roomStruct.modelId) 'w.obj'],'file')
+  WallObj = read_wobj([fullfile(pathToData,'room',sceneId,roomStruct.modelId) 'w.obj']);
+  inWall = zeros(size(gridPtsWorldX));
+  for oi = 1:length(WallObj.objects)
+      if WallObj.objects(oi).type == 'f'
+          for i = 1:length(WallObj.objects(oi).data.vertices)
+              faceId = WallObj.objects(oi).data.vertices(i,:);
+              floorP = WallObj.vertices(faceId,[1,3])';
+              inWall = inWall|inpolygon(gridPtsWorldX,gridPtsWorldY,floorP(1,:),floorP(2,:));
+          end
+      end
+  end
+  gridPtsObjWorldInd = inWall(:)'&(gridPtsWorld(3,:)<ceilZ-voxUnit/2)&(gridPtsWorld(3,:)>floorZ+voxUnit/2);
+  [~,classRootId] = getobjclassSUNCG('wall',objcategory);
+  gridPtsLabel(gridPtsObjWorldInd) = classRootId;     
 end
-gridPtsObjWorldInd = inWall(:)'&(gridPtsWorld(3,:)<ceilZ-voxUnit/2)&(gridPtsWorld(3,:)>floorZ+voxUnit/2);
-[~,classRootId] = getobjclassSUNCG('wall',objcategory);
-gridPtsLabel(gridPtsObjWorldInd) = classRootId;     
 
 
 
