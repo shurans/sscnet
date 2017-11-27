@@ -70,45 +70,47 @@ gridPtsLabel(gridPtsObjWorldInd) = classRootId;
 
 
 % Loop through each object and set voxels to class ID
-for objId = roomStruct.nodeIndices
-    object_struct = floorStruct.nodes{objId+1};
-    if isfield(object_struct, 'modelId')
-        % Set segmentation class ID
-        [classRootName,classRootId] = getobjclassSUNCG(strrep(object_struct.modelId,'/','__'),objcategory);
+if isfield(roomStruct, 'nodeIndices')
+    for objId = roomStruct.nodeIndices
+        object_struct = floorStruct.nodes{objId+1};
+        if isfield(object_struct, 'modelId')
+            % Set segmentation class ID
+            [classRootName,classRootId] = getobjclassSUNCG(strrep(object_struct.modelId,'/','__'),objcategory);
 
-        % Compute object bbox in world coordinates
-        objBbox = [object_struct.bbox.min([1,3,2])',object_struct.bbox.max([1,3,2])'];
+            % Compute object bbox in world coordinates
+            objBbox = [object_struct.bbox.min([1,3,2])',object_struct.bbox.max([1,3,2])'];
 
-        % Load segmentation of object in object coordinates
-        filename= fullfile(pathToData,'object_vox/object_vox_data/',strrep(object_struct.modelId,'/','__'), [strrep(object_struct.modelId,'/','__'), '.binvox']);
-        [voxels,scale,translate] = read_binvox(filename);
-        [x,y,z] = ind2sub(size(voxels),find(voxels(:)>0));   
-        objSegPts = bsxfun(@plus,[x,y,z]*scale,translate');
+            % Load segmentation of object in object coordinates
+            filename= fullfile(pathToData,'object_vox/object_vox_data/',strrep(object_struct.modelId,'/','__'), [strrep(object_struct.modelId,'/','__'), '.binvox']);
+            [voxels,scale,translate] = read_binvox(filename);
+            [x,y,z] = ind2sub(size(voxels),find(voxels(:)>0));   
+            objSegPts = bsxfun(@plus,[x,y,z]*scale,translate');
 
-        % Convert object to world coordinates
-        extObj2World_yup = reshape(object_struct.transform,[4,4]);
-        objSegPts = extObj2World_yup*[objSegPts(:,[1,3,2])';ones(1,size(x,1))];
-        objSegPts = objSegPts([1,3,2],:);
+            % Convert object to world coordinates
+            extObj2World_yup = reshape(object_struct.transform,[4,4]);
+            objSegPts = extObj2World_yup*[objSegPts(:,[1,3,2])';ones(1,size(x,1))];
+            objSegPts = objSegPts([1,3,2],:);
 
-        % Get all grid points within the object bbox in world coordinates
-        gridPtsObjWorldInd =      gridPtsWorld(1,:) >= objBbox(1,1) - voxUnit & gridPtsWorld(1,:) <= objBbox(1,2) + voxUnit & ...
-                                  gridPtsWorld(2,:) >= objBbox(2,1) - voxUnit & gridPtsWorld(2,:) <= objBbox(2,2) + voxUnit & ...
-                                  gridPtsWorld(3,:) >= objBbox(3,1) - voxUnit & gridPtsWorld(3,:) <= objBbox(3,2) + voxUnit;
-        gridPtsObjWorld = gridPtsWorld(:,find(gridPtsObjWorldInd));
+            % Get all grid points within the object bbox in world coordinates
+            gridPtsObjWorldInd =      gridPtsWorld(1,:) >= objBbox(1,1) - voxUnit & gridPtsWorld(1,:) <= objBbox(1,2) + voxUnit & ...
+                                      gridPtsWorld(2,:) >= objBbox(2,1) - voxUnit & gridPtsWorld(2,:) <= objBbox(2,2) + voxUnit & ...
+                                      gridPtsWorld(3,:) >= objBbox(3,1) - voxUnit & gridPtsWorld(3,:) <= objBbox(3,2) + voxUnit;
+            gridPtsObjWorld = gridPtsWorld(:,find(gridPtsObjWorldInd));
 
 
-        % If object is a window or door, clear voxels in object bbox
-        [~,wallId] = getobjclassSUNCG('wall',objcategory); 
-        if classRootId == 4 || classRootId == 5
-           gridPtsObjClearInd = gridPtsObjWorldInd&gridPtsLabel==wallId;
-           gridPtsLabel(gridPtsObjClearInd) = 0;
+            % If object is a window or door, clear voxels in object bbox
+            [~,wallId] = getobjclassSUNCG('wall',objcategory); 
+            if classRootId == 4 || classRootId == 5
+               gridPtsObjClearInd = gridPtsObjWorldInd&gridPtsLabel==wallId;
+               gridPtsLabel(gridPtsObjClearInd) = 0;
+            end
+
+            % Apply segmentation to grid points of object
+            [indices, dists] = multiQueryKNNSearchImpl(pointCloud(objSegPts'), gridPtsObjWorld',1);
+            objOccInd = find(sqrt(dists) <= (sqrt(3)/2)*scale);
+            gridPtsObjWorldLinearIdx = find(gridPtsObjWorldInd);
+            gridPtsLabel(gridPtsObjWorldLinearIdx(objOccInd)) = classRootId;
         end
-
-        % Apply segmentation to grid points of object
-        [indices, dists] = multiQueryKNNSearchImpl(pointCloud(objSegPts'), gridPtsObjWorld',1);
-        objOccInd = find(sqrt(dists) <= (sqrt(3)/2)*scale);
-        gridPtsObjWorldLinearIdx = find(gridPtsObjWorldInd);
-        gridPtsLabel(gridPtsObjWorldLinearIdx(objOccInd)) = classRootId;
     end
 end
 
